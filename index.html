@@ -90,12 +90,14 @@
     [data-tone="blue"] { --preview: #e6ecf6; --preview-ink: #435f84; --gridline: #435f8422; }
     [data-tone="peach"] { --preview: #f2e8df; --preview-ink: #7a5540; --gridline: #7a554022; }
     [data-slot="attachment-media"] > img { width: 100%; height: 100%; object-fit: cover; }
-    [data-slot="attachment-media"] > .lootern-preview {
+    [data-slot="attachment-media"] > .project-preview {
       position: absolute;
       inset: 0;
       object-fit: contain;
-      background-color: #121212;
+      background-color: var(--preview-background);
     }
+    .lootern-preview { --preview-background: #121212; }
+    .can-crops-preview { --preview-background: #efefe4; }
     .placeholder { display: grid; justify-items: center; gap: 10px; font: 500 .69rem / 1.4 var(--mono); }
     .image-icon {
       position: relative;
@@ -176,7 +178,7 @@
         <article aria-labelledby="lootern" class="project">
           <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
             <div data-slot="attachment-media" data-variant="image" data-tone="lavender">
-              <img class="lootern-preview" src="assets/lootern.png" width="1686" height="1486"
+              <img class="project-preview lootern-preview" src="assets/lootern.png" width="1686" height="1486"
                 alt="Lootern chat showing co-op game recommendations in a sortable table.">
             </div>
             <div data-slot="attachment-content">
@@ -200,10 +202,8 @@
         <article aria-labelledby="can-crops" class="project">
           <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
             <div data-slot="attachment-media" data-variant="image" data-tone="mint">
-              <div class="placeholder">
-                <span class="image-icon" aria-hidden="true"></span>
-                <span>Image placeholder</span>
-              </div>
+              <img class="project-preview can-crops-preview" src="assets/can-crops.png" width="2774" height="1640"
+                alt="Can Crops coffee storefront showing product listings and filters for roast, grind, origin, and price.">
             </div>
             <div data-slot="attachment-content">
               <p class="project-kind">ASU capstone</p>
