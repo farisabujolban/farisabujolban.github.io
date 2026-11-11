@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Faris Abujolban’s portfolio of AI, backend, desktop, and systems projects.">
+  <meta name="theme-color" content="#f8f8f5">
+  <title>Faris Abujolban | Portfolio</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --background: #f8f8f5;
+      --card: #fff;
+      --foreground: #191926;
+      --muted: #575865;
+      --border: #dedee6;
+      --accent: #4935a1;
+      --sans: "Geist", "Inter", system-ui, sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--sans); }
+    a { color: inherit; }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+    a:hover { color: var(--accent); }
+    .wrap { width: min(1120px, calc(100% - 64px)); margin-inline: auto; }
+
+    .site-header { border-bottom: 1px solid var(--border); }
+    .site-header .wrap {
+      display: flex;
+      min-height: 68px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand { font-size: .95rem; font-weight: 680; letter-spacing: -.02em; text-decoration: none; }
+    nav { display: flex; flex-wrap: wrap; gap: 22px; }
+    nav a { color: var(--muted); font-size: .875rem; font-weight: 550; text-decoration: none; }
+
+    .hero { padding-block: clamp(3.75rem, 8vw, 7rem) clamp(3.5rem, 7vw, 5.75rem); }
+    .role {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 17px;
+      color: var(--accent);
+      font: 600 .75rem / 1.5 var(--mono);
+      text-transform: uppercase;
+      letter-spacing: .075em;
+    }
+    .role::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    h1 { margin: 0; font-size: clamp(2.75rem, 7vw, 5.6rem); font-weight: 720; line-height: 1.01; letter-spacing: -.048em; }
+    .intro { max-width: 36rem; margin: 22px 0 0; color: var(--muted); font-size: clamp(1rem, 2vw, 1.18rem); line-height: 1.65; }
+
+    .projects { padding-block: 26px 76px; border-top: 1px solid var(--border); }
+    .section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
+    h2 { margin: 0; font-size: clamp(1.75rem, 3.5vw, 2.4rem); font-weight: 690; line-height: 1.2; letter-spacing: -.045em; }
+    .count { color: var(--muted); font: 500 .75rem / 1.5 var(--mono); }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+    .project { min-width: 0; }
+
+    /* Static shadcn/ui Attachment slots and the Badge outline variant. */
+    [data-slot="attachment"].project-attachment {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-width: 0;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--card);
+    }
+    [data-slot="attachment-media"] {
+      --preview: #ebe7f9;
+      --preview-ink: #64558d;
+      --gridline: #64558d16;
+      position: relative;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      border-radius: 9px;
+      color: var(--preview-ink);
+      background-color: var(--preview);
+      background-image: radial-gradient(circle, var(--gridline) 1px, transparent 1.3px);
+      background-size: 12px 12px;
+    }
+    [data-tone="mint"] { --preview: #e3eee8; --preview-ink: #3e6457; --gridline: #3e645722; }
+    [data-tone="blue"] { --preview: #e6ecf6; --preview-ink: #435f84; --gridline: #435f8422; }
+    [data-tone="peach"] { --preview: #f2e8df; --preview-ink: #7a5540; --gridline: #7a554022; }
+    [data-slot="attachment-media"] > img { width: 100%; height: 100%; object-fit: cover; }
+    .placeholder { display: grid; justify-items: center; gap: 10px; font: 500 .69rem / 1.4 var(--mono); }
+    .image-icon {
+      position: relative;
+      width: 32px;
+      height: 25px;
+      overflow: hidden;
+      border: 1.5px solid currentColor;
+      border-radius: 5px;
+    }
+    .image-icon::before, .image-icon::after { position: absolute; content: ""; }
+    .image-icon::before { width: 4px; height: 4px; top: 4px; left: 6px; border: 1px solid currentColor; border-radius: 50%; }
+    .image-icon::after {
+      width: 17px;
+      height: 17px;
+      bottom: -7px;
+      right: 2px;
+      border-top: 1.5px solid currentColor;
+      border-left: 1.5px solid currentColor;
+      border-radius: 2px;
+      transform: rotate(45deg);
+    }
+
+    [data-slot="attachment-content"] { display: flex; flex: 1; flex-direction: column; min-width: 0; padding: 16px 13px 13px; }
+    .project-kind { margin: 0 0 6px; color: var(--accent); font-size: .74rem; font-weight: 650; }
+    h3 { margin: 0; font-size: 1.36rem; font-weight: 680; line-height: 1.2; letter-spacing: -.035em; }
+    .project-description { margin: 9px 0 19px; color: var(--muted); font-size: .89rem; line-height: 1.58; }
+    .tags { display: flex; flex-wrap: wrap; gap: 5px; margin: auto 0 0; padding: 0; list-style: none; }
+    [data-slot="badge"][data-variant="outline"] {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: .7rem;
+      font-weight: 550;
+      line-height: 1.35;
+      white-space: nowrap;
+    }
+    .skip-link { position: absolute; top: 8px; left: 8px; z-index: 1; padding: 10px; background: var(--card); }
+    .skip-link:not(:focus) { clip-path: inset(50%); }
+
+    @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 560px) {
+      .wrap { width: calc(100% - 32px); }
+      .site-header .wrap { padding-block: 13px; min-height: 60px; gap: 12px; }
+      nav { gap: 8px 14px; }
+      nav a { font-size: .8rem; }
+      .grid { grid-template-columns: minmax(0, 1fr); }
+      .projects { padding-bottom: 44px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="#main">Faris Abujolban</a>
+      <nav aria-label="Main navigation">
+        <a href="#projects">Projects</a>
+        <a href="https://github.com/farisabujolban">GitHub</a>
+        <a href="https://www.linkedin.com/in/faris-abujolban/">LinkedIn</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="wrap">
+    <div class="hero">
+      <p class="role">Software engineer</p>
+      <h1>Faris Abujolban</h1>
+      <p class="intro">I build AI applications, backend APIs, and systems software. I study computer science at Arizona State University.</p>
+    </div>
+    <section id="projects" class="projects" aria-labelledby="projects-heading">
+      <div class="section-heading">
+        <h2 id="projects-heading">Projects</h2>
+        <span class="count">12 projects</span>
+      </div>
+      <!-- Replace the .placeholder element inside each attachment-media slot with an img and descriptive alt text. -->
+      <div class="grid">
+        <article aria-labelledby="lootern" class="project">
+          <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
+            <div data-slot="attachment-media" data-variant="image" data-tone="lavender">
+              <div class="placeholder">
+                <span class="image-icon" aria-hidden="true"></span>
+                <span>Image placeholder</span>
+              </div>
+            </div>
+            <div data-slot="attachment-content">
+              <p class="project-kind">AI game explorer</p>
+              <h3 id="lootern"><span data-slot="attachment-title">Lootern</span></h3>
+              <p class="project-description"><span data-slot="attachment-description">Built an Azure-hosted game explorer with an AI agent that answers questions using read-only PostgreSQL queries and retrieved game documents. Added interruptible LiveKit voice conversations and evaluated document retrieval and generated answers.</span></p>
+              <ul class="tags" aria-label="Technologies">
+                <li><span data-slot="badge" data-variant="outline">Python</span></li>
+                <li><span data-slot="badge" data-variant="outline">FastAPI</span></li>
+                <li><span data-slot="badge" data-variant="outline">React</span></li>
+                <li><span data-slot="badge" data-variant="outline">LangGraph</span></li>
+                <li><span data-slot="badge" data-variant="outline">PostgreSQL</span></li>
+                <li><span data-slot="badge" data-variant="outline">LiveKit</span></li>
+                <li><span data-slot="badge" data-variant="outline">RAG</span></li>
+                <li><span data-slot="badge" data-variant="outline">Azure</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article aria-labelledby="can-crops" class="project">
+          <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
+            <div data-slot="attachment-media" data-variant="image" data-tone="mint">
+              <div class="placeholder">
+                <span class="image-icon" aria-hidden="true"></span>
+                <span>Image placeholder</span>
+              </div>
+            </div>
+            <div data-slot="attachment-content">
+              <p class="project-kind">ASU capstone</p>
+              <h3 id="can-crops"><span data-slot="attachment-title">Can Crops</span></h3>
+              <p class="project-description"><span data-slot="attachment-description">Built a bilingual storefront and REST API on a three-person team. Integrated a coffee roast classifier into the Node.js API and cut CPU inference latency from 11.0 ms to 1.2 ms with INT8 quantization, while retaining 99.5% accuracy on held-out data.</span></p>
+              <ul class="tags" aria-label="Technologies">
+                <li><span data-slot="badge" data-variant="outline">TypeScript</span></li>
+                <li><span data-slot="badge" data-variant="outline">React</span></li>
+                <li><span data-slot="badge" data-variant="outline">Hono</span></li>
+                <li><span data-slot="badge" data-variant="outline">PostgreSQL</span></li>
+                <li><span data-slot="badge" data-variant="outline">PyTorch</span></li>
+                <li><span data-slot="badge" data-variant="outline">ONNX Runtime</span></li>
+                <li><span data-slot="badge" data-variant="outline">Docker</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article aria-labelledby="codeanchor" class="project">
+          <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
+            <div data-slot="attachment-media" data-variant="image" data-tone="blue">
+              <div class="placeholder">
+                <span class="image-icon" aria-hidden="true"></span>
+                <span>Image placeholder</span>
+              </div>
+            </div>
+            <div data-slot="attachment-content">
+              <p class="project-kind">Published npm package</p>
+              <h3 id="codeanchor"><span data-slot="attachment-title">CodeAnchor</span></h3>
+              <p class="project-description"><span data-slot="attachment-description">Published a static analysis CLI that catches broken repository references and stale comments. It runs 67 rules across eight languages, uses Git to inspect staged changes, and has 647 Vitest tests.</span></p>
+              <ul class="tags" aria-label="Technologies">
+                <li><span data-slot="badge" data-variant="outline">TypeScript</span></li>
+                <li><span data-slot="badge" data-variant="outline">Node.js</span></li>
+                <li><span data-slot="badge" data-variant="outline">Commander</span></li>
+                <li><span data-slot="badge" data-variant="outline">Git</span></li>
+                <li><span data-slot="badge" data-variant="outline">Vitest</span></li>
+                <li><span data-slot="badge" data-variant="outline">npm</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article aria-labelledby="cairn" class="project">
+          <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
+            <div data-slot="attachment-media" data-variant="image" data-tone="mint">
+              <div class="placeholder">
+                <span class="image-icon" aria-hidden="true"></span>
+                <span>Image placeholder</span>
+              </div>
+            </div>
+            <div data-slot="attachment-content">
+              <p class="project-kind">Open-source issue tracker</p>
+              <h3 id="cairn"><span data-slot="attachment-title">Cairn</span></h3>
+              <p class="project-description"><span data-slot="attachment-description">Built a self-hosted tracker for epics, stories, and tasks. Implemented project-level roles with Pundit, kept ownership transfers atomic, and wrote 449 automated tests for authorization and application behavior.</span></p>
+              <ul class="tags" aria-label="Technologies">
+                <li><span data-slot="badge" data-variant="outline">Ruby on Rails</span></li>
+                <li><span data-slot="badge" data-variant="outline">Hotwire</span></li>
+                <li><span data-slot="badge" data-variant="outline">SQLite</span></li>
+                <li><span data-slot="badge" data-variant="outline">Pundit</span></li>
+                <li><span data-slot="badge" data-variant="outline">Minitest</span></li>
+                <li><span data-slot="badge" data-variant="outline">Capybara</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article aria-labelledby="stepsnap" class="project">
+          <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
+            <div data-slot="attachment-media" data-variant="image" data-tone="lavender">
+              <div class="placeholder">
+                <span class="image-icon" aria-hidden="true"></span>
+                <span>Image placeholder</span>
+              </div>
+            </div>
+            <div data-slot="attachment-content">
+              <p class="project-kind">Native macOS app</p>
+              <h3 id="stepsnap"><span data-slot="attachment-title">StepSnap</span></h3>
+              <p class="project-description"><span data-slot="attachment-description">Built a menu bar app that turns a recorded workflow into a step-by-step guide with screenshots on the user’s Mac. Fixed a race between global click capture and menu handling, and covered recording workflows with 52 XCTest cases.</span></p>
+              <ul class="tags" aria-label="Technologies">
+                <li><span data-slot="badge" data-variant="outline">Swift</span></li>
+                <li><span data-slot="badge" data-variant="outline">AppKit</span></li>
+                <li><span data-slot="badge" data-variant="outline">ScreenCaptureKit</span></li>
+                <li><span data-slot="badge" data-variant="outline">Accessibility API</span></li>
+                <li><span data-slot="badge" data-variant="outline">XCTest</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article aria-labelledby="coursebackup" class="project">
+          <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
+            <div data-slot="attachment-media" data-variant="image" data-tone="peach">
+              <div class="placeholder">
+                <span class="image-icon" aria-hidden="true"></span>
+                <span>Image placeholder</span>
+              </div>
+            </div>
+            <div data-slot="attachment-content">
+              <p class="project-kind">Desktop app</p>
+              <h3 id="coursebackup"><span data-slot="attachment-title">CourseBackup</span></h3>
+              <p class="project-description"><span data-slot="attachment-description">Built a desktop app that saves Canvas course files and preserves their folder structure. It follows paginated API responses, downloads files on background threads, and redacts access tokens from logs and tracebacks.</span></p>
+              <ul class="tags" aria-label="Technologies">
+                <li><span data-slot="badge" data-variant="outline">Python</span></li>
+                <li><span data-slot="badge" data-variant="outline">CustomTkinter</span></li>
+                <li><span data-slot="badge" data-variant="outline">REST API</span></li>
+                <li><span data-slot="badge" data-variant="outline">Concurrency</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article aria-labelledby="zombiereaper" class="project">
+          <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
+            <div data-slot="attachment-media" data-variant="image" data-tone="blue">
+              <div class="placeholder">
+                <span class="image-icon" aria-hidden="true"></span>
+                <span>Image placeholder</span>
+              </div>
+            </div>
+            <div data-slot="attachment-content">
+              <p class="project-kind">Operating systems coursework</p>
+              <h3 id="zombiereaper"><span data-slot="attachment-title">ZombieReaper</span></h3>
+              <p class="project-description"><span data-slot="attachment-description">Built a Linux kernel module that identifies zombie processes for a given user and coordinates cleanup across producer and consumer threads. A bounded buffer and semaphores synchronize the threads, including during module unload.</span></p>
+              <ul class="tags" aria-label="Technologies">
+                <li><span data-slot="badge" data-variant="outline">C</span></li>
+                <li><span data-slot="badge" data-variant="outline">Linux Kernel</span></li>
+                <li><span data-slot="badge" data-variant="outline">Concurrency</span></li>
+                <li><span data-slot="badge" data-variant="outline">Semaphores</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article aria-labelledby="faultline" class="project">
+          <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
+            <div data-slot="attachment-media" data-variant="image" data-tone="blue">
+              <div class="placeholder">
+                <span class="image-icon" aria-hidden="true"></span>
+                <span>Image placeholder</span>
+              </div>
+            </div>
+            <div data-slot="attachment-content">
+              <p class="project-kind">Operating systems coursework</p>
+              <h3 id="faultline"><span data-slot="attachment-title">Faultline</span></h3>
+              <p class="project-description"><span data-slot="attachment-description">Built an on-demand page allocator exposed to user space through ioctl. The module walks five levels of page tables and maps physical frames with requested permissions, with separate handling for x86-64 and ARM64.</span></p>
+              <ul class="tags" aria-label="Technologies">
+                <li><span data-slot="badge" data-variant="outline">C</span></li>
+                <li><span data-slot="badge" data-variant="outline">Linux Kernel</span></li>
+                <li><span data-slot="badge" data-variant="outline">Virtual Memory</span></li>
+                <li><span data-slot="badge" data-variant="outline">ioctl</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article aria-labelledby="platter" class="project">
+          <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
+            <div data-slot="attachment-media" data-variant="image" data-tone="blue">
+              <div class="placeholder">
+                <span class="image-icon" aria-hidden="true"></span>
+                <span>Image placeholder</span>
+              </div>
+            </div>
+            <div data-slot="attachment-content">
+              <p class="project-kind">Operating systems coursework</p>
+              <h3 id="platter"><span data-slot="attachment-title">Platter</span></h3>
+              <p class="project-description"><span data-slot="attachment-description">Built a Linux kernel module that reads and writes a raw USB block device. It converts byte offsets into sector addresses, checks device bounds, and submits synchronous block I/O requests.</span></p>
+              <ul class="tags" aria-label="Technologies">
+                <li><span data-slot="badge" data-variant="outline">C</span></li>
+                <li><span data-slot="badge" data-variant="outline">Linux Kernel</span></li>
+                <li><span data-slot="badge" data-variant="outline">Block I/O</span></li>
+                <li><span data-slot="badge" data-variant="outline">BIO</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article aria-labelledby="skybrief" class="project">
+          <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
+            <div data-slot="attachment-media" data-variant="image" data-tone="mint">
+              <div class="placeholder">
+                <span class="image-icon" aria-hidden="true"></span>
+                <span>Image placeholder</span>
+              </div>
+            </div>
+            <div data-slot="attachment-content">
+              <p class="project-kind">Distributed systems coursework</p>
+              <h3 id="skybrief"><span data-slot="attachment-title">Skybrief</span></h3>
+              <p class="project-description"><span data-slot="attachment-description">Built and deployed an ASP.NET app that combined independently written services and libraries. Implemented SOAP contracts and an authenticated SMTP relay, and integrated shared authentication and session state.</span></p>
+              <ul class="tags" aria-label="Technologies">
+                <li><span data-slot="badge" data-variant="outline">C#</span></li>
+                <li><span data-slot="badge" data-variant="outline">ASP.NET</span></li>
+                <li><span data-slot="badge" data-variant="outline">SOAP</span></li>
+                <li><span data-slot="badge" data-variant="outline">WCF</span></li>
+                <li><span data-slot="badge" data-variant="outline">SMTP</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article aria-labelledby="polyroot" class="project">
+          <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
+            <div data-slot="attachment-media" data-variant="image" data-tone="peach">
+              <div class="placeholder">
+                <span class="image-icon" aria-hidden="true"></span>
+                <span>Image placeholder</span>
+              </div>
+            </div>
+            <div data-slot="attachment-content">
+              <p class="project-kind">Compilers coursework</p>
+              <h3 id="polyroot"><span data-slot="attachment-title">Polyroot</span></h3>
+              <p class="project-description"><span data-slot="attachment-description">Wrote a C++ compiler for a small polynomial language. A handwritten recursive descent parser builds a syntax tree that the compiler traverses to simplify and evaluate expressions.</span></p>
+              <ul class="tags" aria-label="Technologies">
+                <li><span data-slot="badge" data-variant="outline">C++</span></li>
+                <li><span data-slot="badge" data-variant="outline">Recursive Descent</span></li>
+                <li><span data-slot="badge" data-variant="outline">Syntax Trees</span></li>
+                <li><span data-slot="badge" data-variant="outline">Memory Management</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article aria-labelledby="cyclecore" class="project">
+          <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
+            <div data-slot="attachment-media" data-variant="image" data-tone="peach">
+              <div class="placeholder">
+                <span class="image-icon" aria-hidden="true"></span>
+                <span>Image placeholder</span>
+              </div>
+            </div>
+            <div data-slot="attachment-content">
+              <p class="project-kind">Digital design coursework</p>
+              <h3 id="cyclecore"><span data-slot="attachment-title">Cyclecore</span></h3>
+              <p class="project-description"><span data-slot="attachment-description">Built a working 4-bit CPU in LogicWorks. Designed the datapath and control logic around a program counter, an ALU, instruction and address decoders, and a shared tri-state bus.</span></p>
+              <ul class="tags" aria-label="Technologies">
+                <li><span data-slot="badge" data-variant="outline">LogicWorks</span></li>
+                <li><span data-slot="badge" data-variant="outline">Digital Logic</span></li>
+                <li><span data-slot="badge" data-variant="outline">CPU Architecture</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
