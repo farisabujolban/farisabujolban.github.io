@@ -6,6 +6,7 @@
   const dialogTitle = dialog.querySelector("#project-dialog-title");
   const dialogContent = dialog.querySelector(".project-dialog-content");
   const closeButton = dialog.querySelector(".project-close");
+  const projectGrid = document.querySelector("#projects .grid");
 
   for (const project of document.querySelectorAll(".project")) {
     const card = project.querySelector(".project-attachment");
@@ -48,7 +49,23 @@
     });
   }
 
-  closeButton.addEventListener("click", () => dialog.close());
+  let projectUnderCloseButton = null;
+  const restoreHover = (event) => {
+    if (projectUnderCloseButton && event.target.closest?.(".project") === projectUnderCloseButton) return;
+
+    projectGrid.classList.remove("suppress-hover");
+    window.removeEventListener("pointermove", restoreHover);
+  };
+  closeButton.addEventListener("click", (event) => {
+    const closedWithPointer = event.detail > 0;
+    if (closedWithPointer) projectGrid.classList.add("suppress-hover");
+    dialog.close();
+
+    if (closedWithPointer) {
+      projectUnderCloseButton = document.elementFromPoint(event.clientX, event.clientY)?.closest(".project");
+      window.addEventListener("pointermove", restoreHover);
+    }
+  });
 
   let startedOnBackdrop = false;
   dialog.addEventListener("pointerdown", (event) => {

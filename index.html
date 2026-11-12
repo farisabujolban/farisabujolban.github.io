@@ -204,13 +204,16 @@
       background: var(--card);
     }
     @media (hover: hover) {
-      .project:hover > .project-attachment { box-shadow: var(--project-hover-shadow); }
+      .grid:not(.suppress-hover) .project:hover > .project-attachment { box-shadow: var(--project-hover-shadow); }
+      .grid:not(.suppress-hover) .project:hover > .project-attachment.is-expandable { border-color: var(--muted); }
     }
     @media (prefers-reduced-motion: no-preference) {
-      .project-attachment { transition: transform 180ms ease-out, box-shadow 180ms ease-out; }
+      .grid:not(.suppress-hover) .project-attachment {
+        transition: transform 180ms ease-out, box-shadow 180ms ease-out;
+      }
     }
     @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-      .project:hover > .project-attachment { transform: translateY(-4px); }
+      .grid:not(.suppress-hover) .project:hover > .project-attachment { transform: translateY(-4px); }
     }
     [data-slot="attachment-media"] {
       position: relative;
@@ -272,8 +275,6 @@
       white-space: nowrap;
     }
     .project-attachment.is-expandable { cursor: pointer; }
-    .project-attachment.is-expandable:hover,
-    .project-attachment.is-expandable:focus-within { border-color: var(--muted); }
     .project-open {
       display: flex;
       align-items: center;
