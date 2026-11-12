@@ -4,17 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Faris Abujolban’s portfolio of AI, backend, desktop, and systems projects.">
-  <meta name="theme-color" content="#f8f8f5">
+  <meta name="theme-color" content="#f2f2f2">
   <title>Faris Abujolban | Portfolio</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
   <style>
     :root {
       color-scheme: light;
-      --background: #f8f8f5;
-      --card: #fff;
-      --foreground: #191926;
-      --muted: #575865;
-      --border: #dedee6;
-      --accent: #4935a1;
+      --background: #f2f2f2;
+      --card: #fafafa;
+      --foreground: #202020;
+      --muted: #575757;
+      --border: #d8d8d8;
+      --accent: #141414;
       --sans: "Geist", "Inter", system-ui, sans-serif;
       --mono: "IBM Plex Mono", ui-monospace, monospace;
     }
@@ -23,7 +24,7 @@
     body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--sans); }
     a { color: inherit; }
     a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
-    a:hover { color: var(--accent); }
+    a:hover { color: var(--accent); text-decoration: underline; }
     .wrap { width: min(1120px, calc(100% - 64px)); margin-inline: auto; }
 
     .site-header { border-bottom: 1px solid var(--border); }
@@ -39,17 +40,6 @@
     nav a { color: var(--muted); font-size: .875rem; font-weight: 550; text-decoration: none; }
 
     .hero { padding-block: clamp(3.75rem, 8vw, 7rem) clamp(3.5rem, 7vw, 5.75rem); }
-    .role {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      margin: 0 0 17px;
-      color: var(--accent);
-      font: 600 .75rem / 1.5 var(--mono);
-      text-transform: uppercase;
-      letter-spacing: .075em;
-    }
-    .role::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
     h1 { margin: 0; font-size: clamp(2.75rem, 7vw, 5.6rem); font-weight: 720; line-height: 1.01; letter-spacing: -.048em; }
     .intro { max-width: 36rem; margin: 22px 0 0; color: var(--muted); font-size: clamp(1rem, 2vw, 1.18rem); line-height: 1.65; }
 
@@ -72,9 +62,9 @@
       background: var(--card);
     }
     [data-slot="attachment-media"] {
-      --preview: #ebe7f9;
-      --preview-ink: #64558d;
-      --gridline: #64558d16;
+      --preview: #e9e9e9;
+      --preview-ink: #555555;
+      --gridline: #00000014;
       position: relative;
       display: grid;
       place-items: center;
@@ -86,9 +76,6 @@
       background-image: radial-gradient(circle, var(--gridline) 1px, transparent 1.3px);
       background-size: 12px 12px;
     }
-    [data-tone="mint"] { --preview: #e3eee8; --preview-ink: #3e6457; --gridline: #3e645722; }
-    [data-tone="blue"] { --preview: #e6ecf6; --preview-ink: #435f84; --gridline: #435f8422; }
-    [data-tone="peach"] { --preview: #f2e8df; --preview-ink: #7a5540; --gridline: #7a554022; }
     [data-slot="attachment-media"] > img { width: 100%; height: 100%; object-fit: cover; }
     [data-slot="attachment-media"] > .project-preview {
       position: absolute;
@@ -97,7 +84,7 @@
       background-color: var(--preview-background);
     }
     .lootern-preview { --preview-background: #121212; }
-    .can-crops-preview { --preview-background: #efefe4; }
+    .can-crops-preview { --preview-background: #efefef; }
     .placeholder { display: grid; justify-items: center; gap: 10px; font: 500 .69rem / 1.4 var(--mono); }
     .image-icon {
       position: relative;
@@ -164,7 +151,6 @@
   </header>
   <main id="main" class="wrap">
     <div class="hero">
-      <p class="role">Software engineer</p>
       <h1>Faris Abujolban</h1>
       <p class="intro">I build AI applications, backend APIs, and systems software. I study computer science at Arizona State University.</p>
     </div>
@@ -177,7 +163,7 @@
       <div class="grid">
         <article aria-labelledby="lootern" class="project">
           <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
-            <div data-slot="attachment-media" data-variant="image" data-tone="lavender">
+            <div data-slot="attachment-media" data-variant="image">
               <img class="project-preview lootern-preview" src="assets/lootern.png" width="1686" height="1486"
                 alt="Lootern chat showing co-op game recommendations in a sortable table.">
             </div>
@@ -201,7 +187,7 @@
 
         <article aria-labelledby="can-crops" class="project">
           <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
-            <div data-slot="attachment-media" data-variant="image" data-tone="mint">
+            <div data-slot="attachment-media" data-variant="image">
               <img class="project-preview can-crops-preview" src="assets/can-crops.png" width="2774" height="1640"
                 alt="Can Crops coffee storefront showing product listings and filters for roast, grind, origin, and price.">
             </div>
@@ -224,7 +210,7 @@
 
         <article aria-labelledby="codeanchor" class="project">
           <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
-            <div data-slot="attachment-media" data-variant="image" data-tone="blue">
+            <div data-slot="attachment-media" data-variant="image">
               <div class="placeholder">
                 <span class="image-icon" aria-hidden="true"></span>
                 <span>Image placeholder</span>
@@ -248,7 +234,7 @@
 
         <article aria-labelledby="cairn" class="project">
           <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
-            <div data-slot="attachment-media" data-variant="image" data-tone="mint">
+            <div data-slot="attachment-media" data-variant="image">
               <div class="placeholder">
                 <span class="image-icon" aria-hidden="true"></span>
                 <span>Image placeholder</span>
@@ -272,7 +258,7 @@
 
         <article aria-labelledby="stepsnap" class="project">
           <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
-            <div data-slot="attachment-media" data-variant="image" data-tone="lavender">
+            <div data-slot="attachment-media" data-variant="image">
               <div class="placeholder">
                 <span class="image-icon" aria-hidden="true"></span>
                 <span>Image placeholder</span>
@@ -295,7 +281,7 @@
 
         <article aria-labelledby="coursebackup" class="project">
           <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
-            <div data-slot="attachment-media" data-variant="image" data-tone="peach">
+            <div data-slot="attachment-media" data-variant="image">
               <div class="placeholder">
                 <span class="image-icon" aria-hidden="true"></span>
                 <span>Image placeholder</span>
@@ -317,7 +303,7 @@
 
         <article aria-labelledby="zombiereaper" class="project">
           <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
-            <div data-slot="attachment-media" data-variant="image" data-tone="blue">
+            <div data-slot="attachment-media" data-variant="image">
               <div class="placeholder">
                 <span class="image-icon" aria-hidden="true"></span>
                 <span>Image placeholder</span>
@@ -339,7 +325,7 @@
 
         <article aria-labelledby="faultline" class="project">
           <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
-            <div data-slot="attachment-media" data-variant="image" data-tone="blue">
+            <div data-slot="attachment-media" data-variant="image">
               <div class="placeholder">
                 <span class="image-icon" aria-hidden="true"></span>
                 <span>Image placeholder</span>
@@ -361,7 +347,7 @@
 
         <article aria-labelledby="platter" class="project">
           <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
-            <div data-slot="attachment-media" data-variant="image" data-tone="blue">
+            <div data-slot="attachment-media" data-variant="image">
               <div class="placeholder">
                 <span class="image-icon" aria-hidden="true"></span>
                 <span>Image placeholder</span>
@@ -383,7 +369,7 @@
 
         <article aria-labelledby="skybrief" class="project">
           <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
-            <div data-slot="attachment-media" data-variant="image" data-tone="mint">
+            <div data-slot="attachment-media" data-variant="image">
               <div class="placeholder">
                 <span class="image-icon" aria-hidden="true"></span>
                 <span>Image placeholder</span>
@@ -406,7 +392,7 @@
 
         <article aria-labelledby="polyroot" class="project">
           <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
-            <div data-slot="attachment-media" data-variant="image" data-tone="peach">
+            <div data-slot="attachment-media" data-variant="image">
               <div class="placeholder">
                 <span class="image-icon" aria-hidden="true"></span>
                 <span>Image placeholder</span>
@@ -428,7 +414,7 @@
 
         <article aria-labelledby="cyclecore" class="project">
           <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
-            <div data-slot="attachment-media" data-variant="image" data-tone="peach">
+            <div data-slot="attachment-media" data-variant="image">
               <div class="placeholder">
                 <span class="image-icon" aria-hidden="true"></span>
                 <span>Image placeholder</span>
