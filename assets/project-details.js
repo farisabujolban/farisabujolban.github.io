@@ -1,0 +1,61 @@
+(() => {
+  const dialog = document.querySelector(".project-dialog");
+  if (typeof dialog.showModal !== "function") return;
+
+  const dialogKind = dialog.querySelector(".project-kind");
+  const dialogTitle = dialog.querySelector("#project-dialog-title");
+  const dialogContent = dialog.querySelector(".project-dialog-content");
+  const closeButton = dialog.querySelector(".project-close");
+
+  for (const project of document.querySelectorAll(".project")) {
+    const card = project.querySelector(".project-attachment");
+    const content = card.querySelector('[data-slot="attachment-content"]');
+    const title = content.querySelector("h3").textContent;
+    const kind = content.querySelector(".project-kind").textContent;
+    const summary = content.querySelector(".project-description");
+    const tags = content.querySelector(".tags");
+    const preview = card.querySelector('[data-slot="attachment-media"] img');
+    const details = project.querySelector(".project-details");
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "project-open";
+    button.setAttribute("aria-label", `View details for ${title}`);
+    button.setAttribute("aria-haspopup", "dialog");
+    button.setAttribute("aria-controls", dialog.id);
+
+    const arrow = document.createElement("span");
+    arrow.setAttribute("aria-hidden", "true");
+    arrow.textContent = "↗";
+    button.append("View details", arrow);
+    content.append(button);
+    card.classList.add("is-expandable");
+
+    card.addEventListener("click", (event) => {
+      const control = event.target.closest("a, button");
+      if (control && control !== button) return;
+      if (!control && !window.getSelection().isCollapsed) return;
+
+      dialogTitle.textContent = title;
+      dialogKind.textContent = kind;
+      dialogContent.replaceChildren();
+      if (preview) dialogContent.append(preview.cloneNode(true));
+      dialogContent.append(summary.cloneNode(true), details.content.cloneNode(true), tags.cloneNode(true));
+
+      button.focus({ preventScroll: true });
+      dialog.showModal();
+      dialog.scrollTop = 0;
+    });
+  }
+
+  closeButton.addEventListener("click", () => dialog.close());
+
+  let startedOnBackdrop = false;
+  dialog.addEventListener("pointerdown", (event) => {
+    startedOnBackdrop = event.target === dialog;
+  });
+  dialog.addEventListener("click", (event) => {
+    if (startedOnBackdrop && event.target === dialog) dialog.close();
+    startedOnBackdrop = false;
+  });
+})();

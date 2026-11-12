@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Faris Abujolban’s portfolio of AI, backend, desktop, and systems projects.">
+  <meta name="description" content="Faris Abujolban’s projects, education, and work experience in software engineering.">
   <meta name="theme-color" content="#f2f2f2">
   <title>Faris Abujolban | Portfolio</title>
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
@@ -20,6 +20,7 @@
       --preview-ink: #555555;
       --gridline: #00000014;
       --glitch-blue: #1856a7;
+      --dock-clearance: calc(88px + env(safe-area-inset-bottom));
       --sans: "Geist", "Inter", system-ui, sans-serif;
       --mono: "IBM Plex Mono", ui-monospace, monospace;
     }
@@ -39,7 +40,8 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; }
-    body { margin: 0; isolation: isolate; background: var(--background); color: var(--foreground); font-family: var(--sans); }
+    html { scroll-padding-bottom: var(--dock-clearance); }
+    body { margin: 0; padding-bottom: var(--dock-clearance); isolation: isolate; background: var(--background); color: var(--foreground); font-family: var(--sans); }
     .letter-glitch {
       position: fixed;
       inset: 0;
@@ -96,17 +98,97 @@
     }
     nav { display: flex; flex-wrap: wrap; gap: 6px; }
     nav a { color: var(--muted); font-size: .875rem; font-weight: 550; }
+    .section-dock {
+      position: fixed;
+      z-index: 2;
+      inset-inline-start: 50%;
+      inset-block-end: calc(12px + env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 4px;
+      padding: 5px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--card);
+      box-shadow: 0 6px 24px #0002;
+      white-space: nowrap;
+    }
+    .section-dock a {
+      display: grid;
+      place-items: center;
+      min-height: 44px;
+      padding-inline: clamp(8px, 3vw, 16px);
+      border-radius: 999px;
+      font-size: .8rem;
+      font-weight: 650;
+      text-decoration: none;
+    }
+    .section-dock a:hover { background: var(--preview); color: var(--foreground); }
+    .section-dock a[aria-current="location"] { background: var(--accent); color: var(--card); }
+    .section-dock a:focus-visible { outline-offset: 2px; }
 
     .hero { padding-block: clamp(3.75rem, 8vw, 7rem) clamp(3.5rem, 7vw, 5.75rem); }
     h1 { margin: 0; font-size: clamp(2.75rem, 7vw, 5.6rem); font-weight: 720; line-height: 1.01; letter-spacing: -.048em; }
     .intro { max-width: 36rem; margin: 22px 0 0; color: var(--muted); font-size: clamp(1rem, 2vw, 1.18rem); line-height: 1.65; }
 
-    .projects { padding-block: 26px 76px; border-top: 1px solid var(--border); }
+    .portfolio-section { padding-block: 26px 56px; border-top: 1px solid var(--border); scroll-margin-top: 16px; }
+    .portfolio-section:last-child { min-block-size: calc(85svh - var(--dock-clearance)); }
     .section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
     h2 { margin: 0; font-size: clamp(1.75rem, 3.5vw, 2.4rem); font-weight: 690; line-height: 1.2; letter-spacing: -.045em; }
     .count { color: var(--muted); font: 500 .75rem / 1.5 var(--mono); }
     .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
     .project { min-width: 0; }
+    .timeline {
+      display: grid;
+      gap: 12px;
+      max-width: 820px;
+      margin: 0;
+      padding: 0 0 0 28px;
+      list-style: none;
+    }
+    .timeline > li {
+      position: relative;
+      display: grid;
+      gap: 6px 24px;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: baseline;
+      padding: 18px 20px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--card);
+    }
+    .timeline > li::before {
+      position: absolute;
+      top: 20px;
+      left: -29px;
+      width: 11px;
+      height: 11px;
+      border: 2px solid var(--muted);
+      border-radius: 50%;
+      background: var(--background);
+      content: "";
+    }
+    .timeline > li:first-child::before { border-color: var(--glitch-blue); background: var(--glitch-blue); }
+    .timeline > li:not(:last-child)::after {
+      position: absolute;
+      inset: 31px auto -33px -24px;
+      width: 1px;
+      background: var(--border);
+      content: "";
+    }
+    .timeline h3 { font-size: 1.12rem; }
+    .timeline p { margin: 0; }
+    .timeline-date { color: var(--muted); font: 500 .75rem / 1.5 var(--mono); }
+    .timeline-place { grid-column: 1 / -1; color: var(--foreground); font-size: .88rem; }
+    .timeline .timeline-description {
+      grid-column: 1 / -1;
+      max-width: 64ch;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: .89rem;
+      line-height: 1.55;
+    }
 
     /* Static shadcn/ui Attachment slots and the Badge outline variant. */
     [data-slot="attachment"].project-attachment {
@@ -178,6 +260,104 @@
       line-height: 1.35;
       white-space: nowrap;
     }
+    .project-attachment.is-expandable { cursor: pointer; }
+    .project-attachment.is-expandable:hover,
+    .project-attachment.is-expandable:focus-within { border-color: var(--muted); }
+    .project-open {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 44px;
+      margin-top: 14px;
+      padding: 8px 0 0;
+      border: 0;
+      border-top: 1px solid var(--border);
+      background: transparent;
+      color: var(--accent);
+      font: 650 .8rem / 1.4 var(--sans);
+      text-align: left;
+      cursor: pointer;
+    }
+    .project-open:focus-visible, .project-close:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+    .project-open span { font-size: 1.1rem; }
+
+    html:has(.project-dialog[open]) { overflow: hidden; }
+    .project-dialog {
+      width: min(680px, calc(100% - 32px));
+      max-height: calc(100dvh - 32px);
+      padding: 0;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--card);
+      color: var(--foreground);
+      box-shadow: 0 24px 80px #0005;
+      overscroll-behavior: contain;
+    }
+    .project-dialog::backdrop { background: #0009; }
+    .project-dialog-header {
+      position: sticky;
+      top: 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: clamp(16px, 4vw, 28px);
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+    }
+    .project-close {
+      display: grid;
+      place-items: center;
+      flex: 0 0 44px;
+      height: 44px;
+      padding: 0;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--foreground);
+      cursor: pointer;
+    }
+    .project-close::before, .project-close::after {
+      grid-area: 1 / 1;
+      width: 14px;
+      height: 2px;
+      border-radius: 1px;
+      background: currentColor;
+      content: "";
+    }
+    .project-close::before { transform: rotate(45deg); }
+    .project-close::after { transform: rotate(-45deg); }
+    .project-close:hover { background: var(--preview); }
+    .project-dialog-content {
+      display: grid;
+      gap: 20px;
+      padding: clamp(16px, 4vw, 28px);
+      overflow-wrap: anywhere;
+    }
+    .project-dialog-content img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 48dvh;
+      object-fit: contain;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--preview-background, var(--preview));
+    }
+    .project-dialog-content p { margin: 0; color: var(--muted); line-height: 1.6; }
+    .project-dialog-content h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    @media (prefers-reduced-motion: no-preference) {
+      .project-dialog[open] { animation: project-pop 230ms cubic-bezier(.2, .8, .3, 1.15); }
+      .project-dialog[open]::backdrop { animation: project-fade 190ms ease-out; }
+      @keyframes project-pop {
+        from { opacity: 0; transform: translateY(12px) scale(.94); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      @keyframes project-fade { from { opacity: 0; } to { opacity: 1; } }
+    }
     .skip-link { position: absolute; top: 8px; left: 8px; z-index: 1; padding: 10px; background: var(--card); }
     .skip-link:not(:focus) { clip-path: inset(50%); }
 
@@ -189,7 +369,8 @@
       nav { gap: 2px; }
       .site-header nav a { padding-inline: 6px; font-size: .8rem; }
       .grid { grid-template-columns: minmax(0, 1fr); }
-      .projects { padding-bottom: 44px; }
+      .portfolio-section { padding-bottom: 40px; }
+      .timeline > li { grid-template-columns: minmax(0, 1fr); padding: 16px; }
     }
   </style>
   <script>
@@ -234,6 +415,8 @@
     })();
   </script>
   <script src="assets/letter-glitch.js" defer></script>
+  <script src="assets/project-details.js" defer></script>
+  <script src="assets/section-dock.js" defer></script>
 </head>
 <body>
   <canvas class="letter-glitch" aria-hidden="true"></canvas>
@@ -242,8 +425,7 @@
     <div class="wrap">
       <a class="brand" href="#main">Faris Abujolban</a>
       <div class="header-actions">
-        <nav aria-label="Main navigation">
-          <a href="#projects">Projects</a>
+        <nav aria-label="Profiles">
           <a href="https://github.com/farisabujolban" target="_blank" rel="noopener">GitHub</a>
           <a href="https://www.linkedin.com/in/faris-abujolban/" target="_blank" rel="noopener">LinkedIn</a>
         </nav>
@@ -263,12 +445,17 @@
       </div>
     </div>
   </header>
+  <nav class="section-dock" aria-label="Portfolio sections">
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#experience">Work Experience</a>
+  </nav>
   <main id="main" class="wrap">
     <div class="hero">
       <h1>Faris Abujolban</h1>
       <p class="intro">I build AI applications, backend APIs, and systems software. I study computer science at Arizona State University.</p>
     </div>
-    <section id="projects" class="projects" aria-labelledby="projects-heading">
+    <section id="projects" class="portfolio-section" aria-labelledby="projects-heading" tabindex="-1">
       <div class="section-heading">
         <h2 id="projects-heading">Projects</h2>
         <span class="count">12 projects</span>
@@ -284,7 +471,7 @@
             <div data-slot="attachment-content">
               <p class="project-kind">AI game explorer</p>
               <h3 id="lootern"><span data-slot="attachment-title">Lootern</span></h3>
-              <p class="project-description"><span data-slot="attachment-description">Built an Azure-hosted game explorer with an AI agent that answers questions using read-only PostgreSQL queries and retrieved game documents. Added interruptible LiveKit voice conversations and evaluated document retrieval and generated answers.</span></p>
+              <p class="project-description"><span data-slot="attachment-description">An Azure-hosted AI game explorer with text and voice chat.</span></p>
               <ul class="tags" aria-label="Technologies">
                 <li><span data-slot="badge" data-variant="outline">Python</span></li>
                 <li><span data-slot="badge" data-variant="outline">FastAPI</span></li>
@@ -297,6 +484,12 @@
               </ul>
             </div>
           </div>
+          <template class="project-details">
+            <section>
+              <h3>Implementation</h3>
+              <p>The agent answers questions using read-only PostgreSQL queries and retrieved game documents. I added interruptible LiveKit voice conversations and evaluated document retrieval and generated answers.</p>
+            </section>
+          </template>
         </article>
 
         <article aria-labelledby="can-crops" class="project">
@@ -308,7 +501,7 @@
             <div data-slot="attachment-content">
               <p class="project-kind">ASU capstone</p>
               <h3 id="can-crops"><span data-slot="attachment-title">Can Crops</span></h3>
-              <p class="project-description"><span data-slot="attachment-description">Built a bilingual storefront and REST API on a three-person team. Integrated a coffee roast classifier into the Node.js API and cut CPU inference latency from 11.0 ms to 1.2 ms with INT8 quantization, while retaining 99.5% accuracy on held-out data.</span></p>
+              <p class="project-description"><span data-slot="attachment-description">A bilingual coffee storefront and REST API built by a three-person capstone team.</span></p>
               <ul class="tags" aria-label="Technologies">
                 <li><span data-slot="badge" data-variant="outline">TypeScript</span></li>
                 <li><span data-slot="badge" data-variant="outline">React</span></li>
@@ -320,6 +513,12 @@
               </ul>
             </div>
           </div>
+          <template class="project-details">
+            <section>
+              <h3>Implementation</h3>
+              <p>I integrated a coffee roast classifier into the Node.js API. INT8 quantization cut CPU inference latency from 11.0 ms to 1.2 ms while retaining 99.5% accuracy on held-out data.</p>
+            </section>
+          </template>
         </article>
 
         <article aria-labelledby="codeanchor" class="project">
@@ -333,7 +532,7 @@
             <div data-slot="attachment-content">
               <p class="project-kind">Published npm package</p>
               <h3 id="codeanchor"><span data-slot="attachment-title">CodeAnchor</span></h3>
-              <p class="project-description"><span data-slot="attachment-description">Published a static analysis CLI that catches broken repository references and stale comments. It runs 67 rules across eight languages, uses Git to inspect staged changes, and has 647 Vitest tests.</span></p>
+              <p class="project-description"><span data-slot="attachment-description">A published static analysis CLI that catches broken repository references and stale comments.</span></p>
               <ul class="tags" aria-label="Technologies">
                 <li><span data-slot="badge" data-variant="outline">TypeScript</span></li>
                 <li><span data-slot="badge" data-variant="outline">Node.js</span></li>
@@ -344,6 +543,12 @@
               </ul>
             </div>
           </div>
+          <template class="project-details">
+            <section>
+              <h3>Implementation</h3>
+              <p>The CLI runs 67 rules across eight languages and uses Git to inspect staged changes. I wrote 647 Vitest tests.</p>
+            </section>
+          </template>
         </article>
 
         <article aria-labelledby="cairn" class="project">
@@ -357,7 +562,7 @@
             <div data-slot="attachment-content">
               <p class="project-kind">Open-source issue tracker</p>
               <h3 id="cairn"><span data-slot="attachment-title">Cairn</span></h3>
-              <p class="project-description"><span data-slot="attachment-description">Built a self-hosted tracker for epics, stories, and tasks. Implemented project-level roles with Pundit, kept ownership transfers atomic, and wrote 449 automated tests for authorization and application behavior.</span></p>
+              <p class="project-description"><span data-slot="attachment-description">A self-hosted tracker for epics, stories, and tasks.</span></p>
               <ul class="tags" aria-label="Technologies">
                 <li><span data-slot="badge" data-variant="outline">Ruby on Rails</span></li>
                 <li><span data-slot="badge" data-variant="outline">Hotwire</span></li>
@@ -368,6 +573,12 @@
               </ul>
             </div>
           </div>
+          <template class="project-details">
+            <section>
+              <h3>Implementation</h3>
+              <p>I implemented project-level roles with Pundit, kept ownership transfers atomic, and wrote 449 automated tests for authorization and application behavior.</p>
+            </section>
+          </template>
         </article>
 
         <article aria-labelledby="stepsnap" class="project">
@@ -381,7 +592,7 @@
             <div data-slot="attachment-content">
               <p class="project-kind">Native macOS app</p>
               <h3 id="stepsnap"><span data-slot="attachment-title">StepSnap</span></h3>
-              <p class="project-description"><span data-slot="attachment-description">Built a menu bar app that turns a recorded workflow into a step-by-step guide with screenshots on the user’s Mac. Fixed a race between global click capture and menu handling, and covered recording workflows with 52 XCTest cases.</span></p>
+              <p class="project-description"><span data-slot="attachment-description">A macOS menu bar app that turns a recorded workflow into a step-by-step guide with screenshots.</span></p>
               <ul class="tags" aria-label="Technologies">
                 <li><span data-slot="badge" data-variant="outline">Swift</span></li>
                 <li><span data-slot="badge" data-variant="outline">AppKit</span></li>
@@ -391,6 +602,12 @@
               </ul>
             </div>
           </div>
+          <template class="project-details">
+            <section>
+              <h3>Implementation</h3>
+              <p>Recording runs on the user’s Mac. I fixed a race between global click capture and menu handling and covered recording workflows with 52 XCTest cases.</p>
+            </section>
+          </template>
         </article>
 
         <article aria-labelledby="coursebackup" class="project">
@@ -404,7 +621,7 @@
             <div data-slot="attachment-content">
               <p class="project-kind">Desktop app</p>
               <h3 id="coursebackup"><span data-slot="attachment-title">CourseBackup</span></h3>
-              <p class="project-description"><span data-slot="attachment-description">Built a desktop app that saves Canvas course files and preserves their folder structure. It follows paginated API responses, downloads files on background threads, and redacts access tokens from logs and tracebacks.</span></p>
+              <p class="project-description"><span data-slot="attachment-description">A desktop app that saves Canvas course files and preserves their folder structure.</span></p>
               <ul class="tags" aria-label="Technologies">
                 <li><span data-slot="badge" data-variant="outline">Python</span></li>
                 <li><span data-slot="badge" data-variant="outline">CustomTkinter</span></li>
@@ -413,6 +630,12 @@
               </ul>
             </div>
           </div>
+          <template class="project-details">
+            <section>
+              <h3>Implementation</h3>
+              <p>The app follows paginated API responses, downloads files on background threads, and redacts access tokens from logs and tracebacks.</p>
+            </section>
+          </template>
         </article>
 
         <article aria-labelledby="zombiereaper" class="project">
@@ -426,7 +649,7 @@
             <div data-slot="attachment-content">
               <p class="project-kind">Operating systems coursework</p>
               <h3 id="zombiereaper"><span data-slot="attachment-title">ZombieReaper</span></h3>
-              <p class="project-description"><span data-slot="attachment-description">Built a Linux kernel module that identifies zombie processes for a given user and coordinates cleanup across producer and consumer threads. A bounded buffer and semaphores synchronize the threads, including during module unload.</span></p>
+              <p class="project-description"><span data-slot="attachment-description">A Linux kernel module that finds and cleans up zombie processes for a given user.</span></p>
               <ul class="tags" aria-label="Technologies">
                 <li><span data-slot="badge" data-variant="outline">C</span></li>
                 <li><span data-slot="badge" data-variant="outline">Linux Kernel</span></li>
@@ -435,6 +658,12 @@
               </ul>
             </div>
           </div>
+          <template class="project-details">
+            <section>
+              <h3>Implementation</h3>
+              <p>Producer and consumer threads coordinate cleanup through a bounded buffer and semaphores, including during module unload.</p>
+            </section>
+          </template>
         </article>
 
         <article aria-labelledby="faultline" class="project">
@@ -448,7 +677,7 @@
             <div data-slot="attachment-content">
               <p class="project-kind">Operating systems coursework</p>
               <h3 id="faultline"><span data-slot="attachment-title">Faultline</span></h3>
-              <p class="project-description"><span data-slot="attachment-description">Built an on-demand page allocator exposed to user space through ioctl. The module walks five levels of page tables and maps physical frames with requested permissions, with separate handling for x86-64 and ARM64.</span></p>
+              <p class="project-description"><span data-slot="attachment-description">A Linux kernel module that exposes on-demand page allocation to user space through ioctl.</span></p>
               <ul class="tags" aria-label="Technologies">
                 <li><span data-slot="badge" data-variant="outline">C</span></li>
                 <li><span data-slot="badge" data-variant="outline">Linux Kernel</span></li>
@@ -457,6 +686,12 @@
               </ul>
             </div>
           </div>
+          <template class="project-details">
+            <section>
+              <h3>Implementation</h3>
+              <p>The module walks five levels of page tables and maps physical frames with the requested permissions. It handles x86-64 and ARM64 separately.</p>
+            </section>
+          </template>
         </article>
 
         <article aria-labelledby="platter" class="project">
@@ -470,7 +705,7 @@
             <div data-slot="attachment-content">
               <p class="project-kind">Operating systems coursework</p>
               <h3 id="platter"><span data-slot="attachment-title">Platter</span></h3>
-              <p class="project-description"><span data-slot="attachment-description">Built a Linux kernel module that reads and writes a raw USB block device. It converts byte offsets into sector addresses, checks device bounds, and submits synchronous block I/O requests.</span></p>
+              <p class="project-description"><span data-slot="attachment-description">A Linux kernel module that reads and writes a raw USB block device.</span></p>
               <ul class="tags" aria-label="Technologies">
                 <li><span data-slot="badge" data-variant="outline">C</span></li>
                 <li><span data-slot="badge" data-variant="outline">Linux Kernel</span></li>
@@ -479,6 +714,12 @@
               </ul>
             </div>
           </div>
+          <template class="project-details">
+            <section>
+              <h3>Implementation</h3>
+              <p>The module converts byte offsets into sector addresses, checks device bounds, and submits synchronous block I/O requests.</p>
+            </section>
+          </template>
         </article>
 
         <article aria-labelledby="skybrief" class="project">
@@ -492,7 +733,7 @@
             <div data-slot="attachment-content">
               <p class="project-kind">Distributed systems coursework</p>
               <h3 id="skybrief"><span data-slot="attachment-title">Skybrief</span></h3>
-              <p class="project-description"><span data-slot="attachment-description">Built and deployed an ASP.NET app that combined independently written services and libraries. Implemented SOAP contracts and an authenticated SMTP relay, and integrated shared authentication and session state.</span></p>
+              <p class="project-description"><span data-slot="attachment-description">A deployed ASP.NET app that combines independently written services and libraries.</span></p>
               <ul class="tags" aria-label="Technologies">
                 <li><span data-slot="badge" data-variant="outline">C#</span></li>
                 <li><span data-slot="badge" data-variant="outline">ASP.NET</span></li>
@@ -502,6 +743,12 @@
               </ul>
             </div>
           </div>
+          <template class="project-details">
+            <section>
+              <h3>Implementation</h3>
+              <p>I implemented SOAP contracts and an authenticated SMTP relay and integrated shared authentication and session state.</p>
+            </section>
+          </template>
         </article>
 
         <article aria-labelledby="polyroot" class="project">
@@ -515,7 +762,7 @@
             <div data-slot="attachment-content">
               <p class="project-kind">Compilers coursework</p>
               <h3 id="polyroot"><span data-slot="attachment-title">Polyroot</span></h3>
-              <p class="project-description"><span data-slot="attachment-description">Wrote a C++ compiler for a small polynomial language. A handwritten recursive descent parser builds a syntax tree that the compiler traverses to simplify and evaluate expressions.</span></p>
+              <p class="project-description"><span data-slot="attachment-description">A C++ compiler for a small polynomial language.</span></p>
               <ul class="tags" aria-label="Technologies">
                 <li><span data-slot="badge" data-variant="outline">C++</span></li>
                 <li><span data-slot="badge" data-variant="outline">Recursive Descent</span></li>
@@ -524,6 +771,12 @@
               </ul>
             </div>
           </div>
+          <template class="project-details">
+            <section>
+              <h3>Implementation</h3>
+              <p>A handwritten recursive descent parser builds a syntax tree that the compiler traverses to simplify and evaluate expressions.</p>
+            </section>
+          </template>
         </article>
 
         <article aria-labelledby="cyclecore" class="project">
@@ -537,7 +790,7 @@
             <div data-slot="attachment-content">
               <p class="project-kind">Digital design coursework</p>
               <h3 id="cyclecore"><span data-slot="attachment-title">Cyclecore</span></h3>
-              <p class="project-description"><span data-slot="attachment-description">Built a working 4-bit CPU in LogicWorks. Designed the datapath and control logic around a program counter, an ALU, instruction and address decoders, and a shared tri-state bus.</span></p>
+              <p class="project-description"><span data-slot="attachment-description">A working 4-bit CPU built in LogicWorks.</span></p>
               <ul class="tags" aria-label="Technologies">
                 <li><span data-slot="badge" data-variant="outline">LogicWorks</span></li>
                 <li><span data-slot="badge" data-variant="outline">Digital Logic</span></li>
@@ -545,9 +798,60 @@
               </ul>
             </div>
           </div>
+          <template class="project-details">
+            <section>
+              <h3>Implementation</h3>
+              <p>I designed the datapath and control logic around a program counter, an ALU, instruction and address decoders, and a shared tri-state bus.</p>
+            </section>
+          </template>
         </article>
       </div>
     </section>
+    <section id="education" class="portfolio-section" aria-labelledby="education-heading" tabindex="-1">
+      <div class="section-heading">
+        <h2 id="education-heading">Education</h2>
+      </div>
+      <ol class="timeline" role="list">
+        <li>
+          <h3>B.S. in Computer Science</h3>
+          <p class="timeline-date">Expected <time datetime="2026-12">Dec 2026</time></p>
+          <p class="timeline-place">Arizona State University</p>
+        </li>
+        <li>
+          <h3>Computer Science Coursework</h3>
+          <p class="timeline-place">Chandler-Gilbert Community College</p>
+        </li>
+      </ol>
+    </section>
+    <section id="experience" class="portfolio-section" aria-labelledby="experience-heading" tabindex="-1">
+      <div class="section-heading">
+        <h2 id="experience-heading">Work Experience</h2>
+      </div>
+      <ol class="timeline" role="list">
+        <li>
+          <h3>Software Engineer (Capstone)</h3>
+          <p class="timeline-date"><time datetime="2026-01">Jan</time> to <time datetime="2026-05">May 2026</time><br><time datetime="2026-08">Aug 2026</time> to present</p>
+          <p class="timeline-place">Arizona State University · Can Crops</p>
+          <p class="timeline-description">Built a bilingual coffee storefront and REST API on a three-person team. Integrated a coffee roast classifier into the Node.js API.</p>
+        </li>
+        <li>
+          <h3>Undergraduate Teaching Assistant</h3>
+          <p class="timeline-date"><time datetime="2025-01">Jan</time> to <time datetime="2025-05">May 2025</time></p>
+          <p class="timeline-place">Arizona State University · Software Engineering</p>
+          <p class="timeline-description">Led exam reviews for 550+ first-year students on Java, object-oriented design, UML, JUnit, and design patterns.</p>
+        </li>
+      </ol>
+    </section>
   </main>
+  <dialog id="project-dialog" class="project-dialog" aria-labelledby="project-dialog-title">
+    <header class="project-dialog-header">
+      <div>
+        <p class="project-kind"></p>
+        <h2 id="project-dialog-title"></h2>
+      </div>
+      <button type="button" class="project-close" aria-label="Close project details" autofocus></button>
+    </header>
+    <div class="project-dialog-content"></div>
+  </dialog>
 </body>
 </html>
