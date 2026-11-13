@@ -11,7 +11,8 @@
   for (const project of document.querySelectorAll(".project")) {
     const card = project.querySelector(".project-attachment");
     const content = card.querySelector('[data-slot="attachment-content"]');
-    const title = content.querySelector("h3").textContent;
+    const heading = content.querySelector('[data-slot="attachment-title"]');
+    const title = heading.textContent;
     const kind = content.querySelector(".project-kind").textContent;
     const summary = content.querySelector(".project-description");
     const tags = content.querySelector(".tags");
@@ -21,15 +22,12 @@
     const button = document.createElement("button");
     button.type = "button";
     button.className = "project-open";
-    button.setAttribute("aria-label", `View details for ${title}`);
+    button.setAttribute("aria-label", `Open ${title} project details`);
     button.setAttribute("aria-haspopup", "dialog");
     button.setAttribute("aria-controls", dialog.id);
 
-    const arrow = document.createElement("span");
-    arrow.setAttribute("aria-hidden", "true");
-    arrow.textContent = "↗";
-    button.append("View details", arrow);
-    content.append(button);
+    button.textContent = title;
+    heading.replaceChildren(button);
     card.classList.add("is-expandable");
 
     card.addEventListener("click", (event) => {

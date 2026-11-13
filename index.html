@@ -57,37 +57,33 @@
     a:focus-visible, .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
     .wrap { width: min(1120px, calc(100% - 64px)); margin-inline: auto; }
 
-    .site-header { border-bottom: 1px solid var(--border); }
-    .site-header .wrap {
-      display: flex;
-      min-height: 68px;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-    .site-header a {
-      padding: 6px 8px;
-      border-radius: 8px;
-      text-decoration: none;
-    }
-    .site-header a:hover { color: var(--accent); }
-    .brand { margin-inline-start: -8px; font-size: .95rem; font-weight: 680; letter-spacing: -.02em; }
-    .header-actions { display: flex; align-items: center; gap: 14px; }
     .theme-toggle:not([hidden]) {
+      position: absolute;
       display: grid;
+      left: calc(50% + .022em);
+      bottom: .05em;
+      transform: translate(-50%, 50%);
       place-items: center;
-      flex: 0 0 44px;
-      width: 44px;
-      height: 44px;
+      width: .491em;
+      height: .491em;
       padding: 0;
       border: 0;
       border-radius: 50%;
       background: transparent;
       color: var(--foreground);
+      font: inherit;
       cursor: pointer;
     }
-    .site-header a:hover, .theme-toggle:hover { background: var(--preview); }
-    .theme-toggle svg { width: 20px; height: 20px; }
+    .theme-toggle::before {
+      content: "";
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+    }
+    .theme-toggle:hover { background: radial-gradient(circle, var(--preview) .145em, transparent .156em); }
+    .theme-toggle svg { width: .223em; height: .223em; }
     .theme-toggle-disc, .theme-toggle-rays { transform-origin: 12px 12px; }
     [data-theme="dark"] .theme-toggle-disc { transform: scale(1.7); }
     [data-theme="dark"] .theme-toggle-rays { transform: rotate(45deg) scale(0); }
@@ -130,15 +126,41 @@
     .section-dock a[aria-current="location"] { background: var(--accent); color: var(--card); }
     .section-dock a:focus-visible { outline-offset: 2px; }
 
-    .hero { padding-block: clamp(3.75rem, 8vw, 7rem) clamp(3.5rem, 7vw, 5.75rem); }
-    h1 { margin: 0; font-size: clamp(2.75rem, 7vw, 5.6rem); font-weight: 720; line-height: 1.01; letter-spacing: -.048em; }
-    .intro { max-width: 36rem; margin: 22px 0 0; color: var(--muted); font-size: clamp(1rem, 2vw, 1.18rem); line-height: 1.65; }
+    .hero { padding-block: clamp(3.75rem, 8vw, 7rem) clamp(3.5rem, 7vw, 5.75rem); text-align: center; }
+    .hero h1 { margin: 0; font-size: clamp(2rem, 7vw, 5.6rem); font-weight: 720; line-height: 1.01; letter-spacing: -.048em; }
+    .hero-period {
+      position: relative;
+      display: inline-block;
+      width: .26em;
+      height: 0;
+      vertical-align: baseline;
+      letter-spacing: normal;
+    }
+    .intro { max-width: 36rem; margin: 22px auto 0; color: var(--muted); font-size: clamp(1rem, 2vw, 1.18rem); line-height: 1.65; }
+    .hero-email { margin: 16px 0 0; color: var(--muted); font: 500 .875rem / 1.5 var(--mono); }
+    .profile-links { justify-content: center; margin-block-start: 8px; }
+    .profile-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 36px;
+      padding: 6px 11px;
+      border: 1px solid;
+      border-radius: 999px;
+      text-decoration: none;
+    }
+    .external-arrow { width: 1.2rem; height: 1.2rem; stroke-width: 1.5; }
+    .external-arrow-shaft { transform-origin: 4px 9px; }
+    .profile-links a:is(:hover, :focus-visible) .external-arrow-shaft { transform: scaleX(1.2); }
+    .profile-links a:is(:hover, :focus-visible) .external-arrow-head { transform: translateX(2px); }
+    @media (prefers-reduced-motion: no-preference) {
+      .external-arrow-shaft, .external-arrow-head { transition: transform 200ms ease; }
+    }
 
     .portfolio-section { padding-block: 26px 56px; border-top: 1px solid var(--border); scroll-margin-top: 16px; }
     .portfolio-section:last-child { min-block-size: calc(85svh - var(--dock-clearance)); }
     .section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
     h2 { margin: 0; font-size: clamp(1.75rem, 3.5vw, 2.4rem); font-weight: 690; line-height: 1.2; letter-spacing: -.045em; }
-    .count { color: var(--muted); font: 500 .75rem / 1.5 var(--mono); }
     .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
     .project { min-width: 0; }
     .timeline {
@@ -272,6 +294,7 @@
     [data-slot="badge"][data-variant="outline"] {
       display: inline-flex;
       align-items: center;
+      gap: 4px;
       border: 1px solid var(--border);
       border-radius: 999px;
       padding: 2px 8px;
@@ -280,19 +303,34 @@
       line-height: 1.35;
       white-space: nowrap;
     }
+    [data-pill-color="gray"] { --brand: #68707b; }
+    [data-pill-color="blue"] { --brand: #2975b5; }
+    [data-pill-color="green"] { --brand: #5fa04e; }
+    [data-pill-color="orange"] { --brand: #ef6737; }
+    [data-pill-color="teal"] { --brand: #009688; }
+    [data-pill-color="cyan"] { --brand: #17a8cc; }
+    [data-pill-color="red"] { --brand: #ce293e; }
+    [data-pill-color="yellow"] { --brand: #dda723; }
+    [data-pill-color="purple"] { --brand: #7651bc; }
+    .profile-links [data-pill-color], [data-slot="badge"][data-pill-color] {
+      color: var(--foreground);
+      background: color-mix(in srgb, var(--brand) 15%, var(--card));
+      border-color: color-mix(in srgb, var(--brand) 34%, var(--border));
+    }
+    .pill-icon { flex: none; width: 14px; height: 14px; object-fit: contain; }
+    .onnx-runtime-icon {
+      background: url("assets/brands/onnxruntime.svg") center / contain no-repeat;
+    }
+    [data-theme="dark"] .onnx-runtime-icon { background-image: url("assets/brands/onnxruntime-dark.svg"); }
+    [data-theme="dark"] .profile-links img[src$="/github.svg"] { filter: invert(1); }
     .project-attachment.is-expandable { cursor: pointer; }
     .project-open {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 44px;
-      margin-top: 14px;
-      padding: 8px 0 0;
+      padding: 0;
       border: 0;
-      border-top: 1px solid var(--border);
       background: transparent;
-      color: var(--accent);
-      font: 650 .8rem / 1.4 var(--sans);
+      color: inherit;
+      font: inherit;
+      letter-spacing: inherit;
       text-align: left;
       cursor: pointer;
     }
@@ -300,7 +338,6 @@
       outline: 2px solid var(--accent);
       outline-offset: 3px;
     }
-    .project-open span { font-size: 1.1rem; }
 
     html:has(.project-dialog[open]) { overflow: hidden; }
     .project-dialog {
@@ -355,7 +392,7 @@
       padding: clamp(16px, 4vw, 28px);
       overflow-wrap: anywhere;
     }
-    .project-dialog-content img {
+    .project-dialog-content > .project-preview {
       display: block;
       width: 100%;
       height: auto;
@@ -382,10 +419,6 @@
     @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (max-width: 560px) {
       .wrap { width: calc(100% - 32px); }
-      .site-header .wrap { padding-block: 13px; min-height: 60px; gap: 12px; }
-      .header-actions { gap: 4px; }
-      nav { gap: 2px; }
-      .site-header nav a { padding-inline: 6px; font-size: .8rem; }
       .grid { grid-template-columns: minmax(0, 1fr); }
       .portfolio-section { padding-bottom: 40px; }
       .timeline > li { grid-template-columns: minmax(0, 1fr); padding: 16px; }
@@ -439,44 +472,50 @@
 <body>
   <canvas class="letter-glitch" aria-hidden="true"></canvas>
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header">
-    <div class="wrap">
-      <a class="brand" href="#main">Faris Abujolban</a>
-      <div class="header-actions">
-        <nav aria-label="Profiles">
-          <a href="https://github.com/farisabujolban" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://www.linkedin.com/in/faris-abujolban/" target="_blank" rel="noopener">LinkedIn</a>
-        </nav>
-        <button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" title="Dark mode" hidden>
-          <!-- Spin adapted from Alfie Jones's Theme Toggles. See THIRD-PARTY-NOTICES.txt. -->
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <defs>
-              <clipPath id="theme-toggle-clip">
-                <path class="theme-toggle-cutout" d="M0 0h25a1 1 0 0010 10v14H0Z" />
-              </clipPath>
-            </defs>
-            <circle class="theme-toggle-disc" cx="12" cy="12" r="5" fill="currentColor" clip-path="url(#theme-toggle-clip)" />
-            <path class="theme-toggle-rays" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"
-              d="M12 1.4v2.4 M20.3 3.7l-2.5 2.5 M22.6 12h-2.4 M12 22.6v-2.4 M1.4 12h2.4 M20.3 20.3l-2.5-2.5 M3.7 20.3l2.5-2.5 M3.7 3.7l2.5 2.5" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  </header>
   <nav class="section-dock" aria-label="Portfolio sections">
     <a href="#projects">Projects</a>
     <a href="#education">Education</a>
-    <a href="#experience">Work Experience</a>
+    <a href="#experience">Experience</a>
   </nav>
   <main id="main" class="wrap">
-    <div class="hero">
-      <h1>Faris Abujolban</h1>
-      <p class="intro">I build AI applications, backend APIs, and systems software. I study computer science at Arizona State University.</p>
-    </div>
+    <header class="hero">
+      <h1 aria-labelledby="hero-name">
+        <span id="hero-name">Faris Abujolban</span><span class="hero-period">
+          <button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" title="Dark mode" hidden>
+            <!-- Spin adapted from Alfie Jones's Theme Toggles. See THIRD-PARTY-NOTICES.txt. -->
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <defs>
+                <clipPath id="theme-toggle-clip">
+                  <path class="theme-toggle-cutout" d="M0 0h25a1 1 0 0010 10v14H0Z" />
+                </clipPath>
+              </defs>
+              <circle class="theme-toggle-disc" cx="12" cy="12" r="5" fill="currentColor" clip-path="url(#theme-toggle-clip)" />
+              <path class="theme-toggle-rays" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                d="M12 1.4v2.4 M20.3 3.7l-2.5 2.5 M22.6 12h-2.4 M12 22.6v-2.4 M1.4 12h2.4 M20.3 20.3l-2.5-2.5 M3.7 20.3l2.5-2.5 M3.7 3.7l2.5 2.5" />
+            </svg>
+          </button>
+        </span>
+      </h1>
+      <p class="intro">I'm a software engineer who builds web apps and deploys AI features with TypeScript and Python. For Can Crops, I helped build an online storefront and made a coffee roast classifier run 9.4x faster on CPU without losing accuracy. I built Lootern, a voice-enabled AI game explorer, and published CodeAnchor, which reached 350+ weekly downloads on npm.</p>
+      <p class="hero-email">faris [dot] abujolban [at] gmail [dot] com</p>
+      <nav class="profile-links" aria-label="Profiles">
+        <a href="https://github.com/farisabujolban" target="_blank" rel="noopener" data-pill-color="gray"><img class="pill-icon" src="assets/brands/github.svg" alt="" width="14" height="14">GitHub<svg class="external-arrow" viewBox="0 0 18 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <g transform="rotate(-45 9 9)">
+            <path class="external-arrow-shaft" d="M4 9h10" vector-effect="non-scaling-stroke" />
+            <path class="external-arrow-head" d="m11 6 3 3-3 3" />
+          </g>
+        </svg></a>
+        <a href="https://www.linkedin.com/in/faris-abujolban/" target="_blank" rel="noopener" data-pill-color="blue"><img class="pill-icon" src="assets/brands/linkedin.svg" alt="" width="14" height="14">LinkedIn<svg class="external-arrow" viewBox="0 0 18 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <g transform="rotate(-45 9 9)">
+            <path class="external-arrow-shaft" d="M4 9h10" vector-effect="non-scaling-stroke" />
+            <path class="external-arrow-head" d="m11 6 3 3-3 3" />
+          </g>
+        </svg></a>
+      </nav>
+    </header>
     <section id="projects" class="portfolio-section" aria-labelledby="projects-heading" tabindex="-1">
       <div class="section-heading">
         <h2 id="projects-heading">Projects</h2>
-        <span class="count">12 projects</span>
       </div>
       <!-- Replace the .placeholder element inside each attachment-media slot with an img and descriptive alt text. -->
       <div class="grid">
@@ -491,14 +530,14 @@
               <h3 id="lootern"><span data-slot="attachment-title">Lootern</span></h3>
               <p class="project-description"><span data-slot="attachment-description">An Azure-hosted AI game explorer with text and voice chat.</span></p>
               <ul class="tags" aria-label="Technologies">
-                <li><span data-slot="badge" data-variant="outline">Python</span></li>
-                <li><span data-slot="badge" data-variant="outline">FastAPI</span></li>
-                <li><span data-slot="badge" data-variant="outline">React</span></li>
-                <li><span data-slot="badge" data-variant="outline">LangGraph</span></li>
-                <li><span data-slot="badge" data-variant="outline">PostgreSQL</span></li>
-                <li><span data-slot="badge" data-variant="outline">LiveKit</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="blue"><img class="pill-icon" src="assets/brands/python.svg" alt="" width="14" height="14">Python</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="teal"><img class="pill-icon" src="assets/brands/fastapi.svg" alt="" width="14" height="14">FastAPI</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="cyan"><img class="pill-icon" src="assets/brands/react.svg" alt="" width="14" height="14">React</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="teal"><img class="pill-icon" src="assets/brands/langgraph.png" alt="" width="14" height="14">LangGraph</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="blue"><img class="pill-icon" src="assets/brands/postgresql.svg" alt="" width="14" height="14">PostgreSQL</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="cyan"><img class="pill-icon" src="assets/brands/livekit.svg" alt="" width="14" height="14">LiveKit</span></li>
                 <li><span data-slot="badge" data-variant="outline">RAG</span></li>
-                <li><span data-slot="badge" data-variant="outline">Azure</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="blue"><img class="pill-icon" src="assets/brands/azure.svg" alt="" width="14" height="14">Azure</span></li>
               </ul>
             </div>
           </div>
@@ -521,13 +560,13 @@
               <h3 id="can-crops"><span data-slot="attachment-title">Can Crops</span></h3>
               <p class="project-description"><span data-slot="attachment-description">A bilingual coffee storefront and REST API built by a three-person capstone team.</span></p>
               <ul class="tags" aria-label="Technologies">
-                <li><span data-slot="badge" data-variant="outline">TypeScript</span></li>
-                <li><span data-slot="badge" data-variant="outline">React</span></li>
-                <li><span data-slot="badge" data-variant="outline">Hono</span></li>
-                <li><span data-slot="badge" data-variant="outline">PostgreSQL</span></li>
-                <li><span data-slot="badge" data-variant="outline">PyTorch</span></li>
-                <li><span data-slot="badge" data-variant="outline">ONNX Runtime</span></li>
-                <li><span data-slot="badge" data-variant="outline">Docker</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="blue"><img class="pill-icon" src="assets/brands/typescript.svg" alt="" width="14" height="14">TypeScript</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="cyan"><img class="pill-icon" src="assets/brands/react.svg" alt="" width="14" height="14">React</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="orange"><img class="pill-icon" src="assets/brands/hono.svg" alt="" width="14" height="14">Hono</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="blue"><img class="pill-icon" src="assets/brands/postgresql.svg" alt="" width="14" height="14">PostgreSQL</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="orange"><img class="pill-icon" src="assets/brands/pytorch.svg" alt="" width="14" height="14">PyTorch</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="gray"><span class="pill-icon onnx-runtime-icon" aria-hidden="true"></span>ONNX Runtime</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="blue"><img class="pill-icon" src="assets/brands/docker.svg" alt="" width="14" height="14">Docker</span></li>
               </ul>
             </div>
           </div>
@@ -550,12 +589,12 @@
               <h3 id="codeanchor"><span data-slot="attachment-title">CodeAnchor</span></h3>
               <p class="project-description"><span data-slot="attachment-description">A published static analysis CLI that catches broken repository references and stale comments.</span></p>
               <ul class="tags" aria-label="Technologies">
-                <li><span data-slot="badge" data-variant="outline">TypeScript</span></li>
-                <li><span data-slot="badge" data-variant="outline">Node.js</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="blue"><img class="pill-icon" src="assets/brands/typescript.svg" alt="" width="14" height="14">TypeScript</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="green"><img class="pill-icon" src="assets/brands/nodejs.svg" alt="" width="14" height="14">Node.js</span></li>
                 <li><span data-slot="badge" data-variant="outline">Commander</span></li>
-                <li><span data-slot="badge" data-variant="outline">Git</span></li>
-                <li><span data-slot="badge" data-variant="outline">Vitest</span></li>
-                <li><span data-slot="badge" data-variant="outline">npm</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="orange"><img class="pill-icon" src="assets/brands/git.svg" alt="" width="14" height="14">Git</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="green"><img class="pill-icon" src="assets/brands/vitest.svg" alt="" width="14" height="14">Vitest</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="red"><img class="pill-icon" src="assets/brands/npm.svg" alt="" width="14" height="14">npm</span></li>
               </ul>
             </div>
           </div>
@@ -578,9 +617,9 @@
               <h3 id="cairn"><span data-slot="attachment-title">Cairn</span></h3>
               <p class="project-description"><span data-slot="attachment-description">A self-hosted tracker for epics, stories, and tasks.</span></p>
               <ul class="tags" aria-label="Technologies">
-                <li><span data-slot="badge" data-variant="outline">Ruby on Rails</span></li>
-                <li><span data-slot="badge" data-variant="outline">Hotwire</span></li>
-                <li><span data-slot="badge" data-variant="outline">SQLite</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="red"><img class="pill-icon" src="assets/brands/rails.svg" alt="" width="14" height="14">Ruby on Rails</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="orange"><img class="pill-icon" src="assets/brands/hotwire.svg" alt="" width="14" height="14">Hotwire</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="blue"><img class="pill-icon" src="assets/brands/sqlite.svg" alt="" width="14" height="14">SQLite</span></li>
                 <li><span data-slot="badge" data-variant="outline">Pundit</span></li>
                 <li><span data-slot="badge" data-variant="outline">Minitest</span></li>
                 <li><span data-slot="badge" data-variant="outline">Capybara</span></li>
@@ -606,7 +645,7 @@
               <h3 id="stepsnap"><span data-slot="attachment-title">StepSnap</span></h3>
               <p class="project-description"><span data-slot="attachment-description">A macOS menu bar app that turns a recorded workflow into a step-by-step guide with screenshots.</span></p>
               <ul class="tags" aria-label="Technologies">
-                <li><span data-slot="badge" data-variant="outline">Swift</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="orange"><img class="pill-icon" src="assets/brands/swift.svg" alt="" width="14" height="14">Swift</span></li>
                 <li><span data-slot="badge" data-variant="outline">AppKit</span></li>
                 <li><span data-slot="badge" data-variant="outline">ScreenCaptureKit</span></li>
                 <li><span data-slot="badge" data-variant="outline">Accessibility API</span></li>
@@ -633,8 +672,8 @@
               <h3 id="coursebackup"><span data-slot="attachment-title">CourseBackup</span></h3>
               <p class="project-description"><span data-slot="attachment-description">A desktop app that saves Canvas course files and preserves their folder structure.</span></p>
               <ul class="tags" aria-label="Technologies">
-                <li><span data-slot="badge" data-variant="outline">Python</span></li>
-                <li><span data-slot="badge" data-variant="outline">CustomTkinter</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="blue"><img class="pill-icon" src="assets/brands/python.svg" alt="" width="14" height="14">Python</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="blue"><img class="pill-icon" src="assets/brands/customtkinter.png" alt="" width="14" height="14">CustomTkinter</span></li>
                 <li><span data-slot="badge" data-variant="outline">REST API</span></li>
                 <li><span data-slot="badge" data-variant="outline">Concurrency</span></li>
               </ul>
@@ -659,8 +698,8 @@
               <h3 id="zombiereaper"><span data-slot="attachment-title">ZombieReaper</span></h3>
               <p class="project-description"><span data-slot="attachment-description">A Linux kernel module that finds and cleans up zombie processes for a given user.</span></p>
               <ul class="tags" aria-label="Technologies">
-                <li><span data-slot="badge" data-variant="outline">C</span></li>
-                <li><span data-slot="badge" data-variant="outline">Linux Kernel</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="blue"><img class="pill-icon" src="assets/brands/c.svg" alt="" width="14" height="14">C</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="yellow"><img class="pill-icon" src="assets/brands/linux.svg" alt="" width="14" height="14">Linux Kernel</span></li>
                 <li><span data-slot="badge" data-variant="outline">Concurrency</span></li>
                 <li><span data-slot="badge" data-variant="outline">Semaphores</span></li>
               </ul>
@@ -685,8 +724,8 @@
               <h3 id="faultline"><span data-slot="attachment-title">Faultline</span></h3>
               <p class="project-description"><span data-slot="attachment-description">A Linux kernel module that exposes on-demand page allocation to user space through ioctl.</span></p>
               <ul class="tags" aria-label="Technologies">
-                <li><span data-slot="badge" data-variant="outline">C</span></li>
-                <li><span data-slot="badge" data-variant="outline">Linux Kernel</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="blue"><img class="pill-icon" src="assets/brands/c.svg" alt="" width="14" height="14">C</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="yellow"><img class="pill-icon" src="assets/brands/linux.svg" alt="" width="14" height="14">Linux Kernel</span></li>
                 <li><span data-slot="badge" data-variant="outline">Virtual Memory</span></li>
                 <li><span data-slot="badge" data-variant="outline">ioctl</span></li>
               </ul>
@@ -711,8 +750,8 @@
               <h3 id="platter"><span data-slot="attachment-title">Platter</span></h3>
               <p class="project-description"><span data-slot="attachment-description">A Linux kernel module that reads and writes a raw USB block device.</span></p>
               <ul class="tags" aria-label="Technologies">
-                <li><span data-slot="badge" data-variant="outline">C</span></li>
-                <li><span data-slot="badge" data-variant="outline">Linux Kernel</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="blue"><img class="pill-icon" src="assets/brands/c.svg" alt="" width="14" height="14">C</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="yellow"><img class="pill-icon" src="assets/brands/linux.svg" alt="" width="14" height="14">Linux Kernel</span></li>
                 <li><span data-slot="badge" data-variant="outline">Block I/O</span></li>
                 <li><span data-slot="badge" data-variant="outline">BIO</span></li>
               </ul>
@@ -737,8 +776,8 @@
               <h3 id="skybrief"><span data-slot="attachment-title">Skybrief</span></h3>
               <p class="project-description"><span data-slot="attachment-description">A deployed ASP.NET app that combines independently written services and libraries.</span></p>
               <ul class="tags" aria-label="Technologies">
-                <li><span data-slot="badge" data-variant="outline">C#</span></li>
-                <li><span data-slot="badge" data-variant="outline">ASP.NET</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="purple"><img class="pill-icon" src="assets/brands/csharp.svg" alt="" width="14" height="14">C#</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="purple"><img class="pill-icon" src="assets/brands/dotnetcore.svg" alt="" width="14" height="14">ASP.NET</span></li>
                 <li><span data-slot="badge" data-variant="outline">ASMX Service</span></li>
                 <li><span data-slot="badge" data-variant="outline">SOAP</span></li>
                 <li><span data-slot="badge" data-variant="outline">WCF</span></li>
@@ -765,7 +804,7 @@
               <h3 id="polyroot"><span data-slot="attachment-title">Polyroot</span></h3>
               <p class="project-description"><span data-slot="attachment-description">A C++ compiler for a small polynomial language.</span></p>
               <ul class="tags" aria-label="Technologies">
-                <li><span data-slot="badge" data-variant="outline">C++</span></li>
+                <li><span data-slot="badge" data-variant="outline" data-pill-color="blue"><img class="pill-icon" src="assets/brands/cplusplus.svg" alt="" width="14" height="14">C++</span></li>
                 <li><span data-slot="badge" data-variant="outline">Recursive Descent</span></li>
                 <li><span data-slot="badge" data-variant="outline">Syntax Trees</span></li>
                 <li><span data-slot="badge" data-variant="outline">Memory Management</span></li>
@@ -815,6 +854,7 @@
           <h3>B.S. in Computer Science</h3>
           <p class="timeline-date">Expected <time datetime="2026-12">Dec 2026</time></p>
           <p class="timeline-place">Arizona State University</p>
+          <p class="timeline-description"><strong>Relevant coursework:</strong> Machine Learning, Operating Systems, Distributed Systems, Compilers, Databases, Computer Organization, Digital Design, Discrete Mathematics, Software Engineering, and .NET.</p>
         </li>
         <li>
           <h3>Computer Science Coursework</h3>
@@ -829,9 +869,15 @@
       <ol class="timeline" role="list">
         <li>
           <h3>Software Engineer (Capstone)</h3>
-          <p class="timeline-date"><time datetime="2026-01">Jan</time> to <time datetime="2026-05">May 2026</time><br><time datetime="2026-08">Aug 2026</time> to present</p>
+          <p class="timeline-date"><time datetime="2026-08">Aug 2026</time> to present</p>
           <p class="timeline-place">Arizona State University · Can Crops</p>
-          <p class="timeline-description">Built a bilingual coffee storefront and REST API on a three-person team. Integrated a coffee roast classifier into the Node.js API.</p>
+          <p class="timeline-description">Integrated a coffee roast classifier into the Node.js API. Optimized it to run 9.4x faster on CPU without losing accuracy.</p>
+        </li>
+        <li>
+          <h3>Software Engineer (Capstone)</h3>
+          <p class="timeline-date"><time datetime="2026-01">Jan</time> to <time datetime="2026-05">May 2026</time></p>
+          <p class="timeline-place">Arizona State University · Can Crops</p>
+          <p class="timeline-description">Built a bilingual coffee storefront and REST API on a three-person team so customers could browse products, check out, and track orders.</p>
         </li>
         <li>
           <h3>Undergraduate Teaching Assistant</h3>
