@@ -239,6 +239,7 @@
     .codeanchor-preview { --preview-background: #1e1e1e; }
     .cyclecore-preview { --preview-background: #fff; }
     .stepsnap-preview { --preview-background: #141414; }
+    .coursebackup-preview { --preview-background: #242424; }
     .placeholder { display: grid; justify-items: center; gap: 10px; font: 500 .69rem / 1.4 var(--mono); }
     .image-icon {
       position: relative;
@@ -624,10 +625,8 @@
         <article aria-labelledby="coursebackup" class="project">
           <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
             <div data-slot="attachment-media" data-variant="image">
-              <div class="placeholder">
-                <span class="image-icon" aria-hidden="true"></span>
-                <span>Image placeholder</span>
-              </div>
+              <img class="project-preview coursebackup-preview" src="assets/coursebackup.png" width="2866" height="1100"
+                alt="CourseBackup showing selected Canvas courses grouped by term and options to back up files, pages, assignments, modules, and the syllabus.">
             </div>
             <div data-slot="attachment-content">
               <p class="project-kind">Desktop app</p>
