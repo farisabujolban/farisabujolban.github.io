@@ -236,6 +236,7 @@
     }
     .lootern-preview { --preview-background: #121212; }
     .can-crops-preview { --preview-background: #efefef; }
+    .cyclecore-preview { --preview-background: #fff; }
     .stepsnap-preview { --preview-background: #141414; }
     .placeholder { display: grid; justify-items: center; gap: 10px; font: 500 .69rem / 1.4 var(--mono); }
     .image-icon {
@@ -793,10 +794,8 @@
         <article aria-labelledby="cyclecore" class="project">
           <div data-slot="attachment" data-state="done" data-size="default" data-orientation="vertical" class="project-attachment">
             <div data-slot="attachment-media" data-variant="image">
-              <div class="placeholder">
-                <span class="image-icon" aria-hidden="true"></span>
-                <span>Image placeholder</span>
-              </div>
+              <img class="project-preview cyclecore-preview" src="assets/cyclecore.png" width="439" height="514"
+                alt="LogicWorks schematic of the Cyclecore 4-bit CPU, showing the ALU, registers, and instruction decoder.">
             </div>
             <div data-slot="attachment-content">
               <p class="project-kind">Digital design coursework</p>
